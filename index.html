@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hotel PMS</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    #pms-container {
+      background-color: #fff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      width: 300px;
+    }
+
+    input, textarea, button {
+      margin-bottom: 10px;
+      width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
+    }
+
+    button {
+      background-color: #4caf50;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+      padding: 10px;
+    }
+
+    #requests-container {
+      margin-top: 20px;
+    }
+
+    .request {
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="pms-container">
+  <h2>Hotel PMS</h2>
+  <label for="roomNumber">Room Number:</label>
+  <input type="text" id="roomNumber" placeholder="Enter room number">
+
+  <label for="request">Request:</label>
+  <input type="text" id="request" placeholder="Enter request">
+
+  <label for="notes">Notes:</label>
+  <textarea id="notes" placeholder="Enter notes"></textarea>
+
+  <button onclick="submitRequest()">Submit Request</button>
+</div>
+
+<div id="requests-container">
+  <h3>Submitted Requests</h3>
+</div>
+
+<script>
+// Array to store submitted requests
+const requests = [];
+
+function submitRequest() {
+  const roomNumber = document.getElementById('roomNumber').value;
+  const request = document.getElementById('request').value;
+  const notes = document.getElementById('notes').value;
+
+  if (roomNumber && request) {
+    // Create a request object
+    const newRequest = {
+      roomNumber: roomNumber,
+      request: request,
+      notes: notes
+    };
+
+    // Add the request to the array
+    requests.push(newRequest);
+
+    // Update the displayed requests
+    displayRequests();
+
+    // Clear the input fields after submission
+    document.getElementById('roomNumber').value = '';
+    document.getElementById('request').value = '';
+    document.getElementById('notes').value = '';
+
+    alert('Request submitted successfully!');
+  } else {
+    alert('Please enter room number and request.');
+  }
+}
+
+function displayRequests() {
+  const requestsContainer = document.getElementById('requests-container');
+  requestsContainer.innerHTML = '<h3>Submitted Requests</h3>';
+
+  // Display each request in the array
+  requests.forEach((request, index) => {
+    const requestElement = document.createElement('div');
+    requestElement.className = 'request';
+    requestElement.innerHTML = `
+      <strong>Room Number:</strong> ${request.roomNumber}<br>
+      <strong>Request:</strong> ${request.request}<br>
+      <strong>Notes:</strong> ${request.notes || 'N/A'}
+    `;
+
+    requestsContainer.appendChild(requestElement);
+  });
+}
+</script>
+
+</body>
+</html>
